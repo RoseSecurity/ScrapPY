@@ -6,3 +6,41 @@ ScrapPY is a Python utility for scraping manuals, documents, and other sensitive
 
 # Demo:
 
+# Install:
+
+Download Repository:
+
+```
+$ mkdir ScrapPY
+$ cd ScrapPY/
+$ sudo git clone https://github.com/RoseSecurity/ScrapPY.git
+```
+
+Install Dependencies:
+
+```
+$ pip3 install PyPDF2
+$ pip3 install textract
+```
+
+ScrapPY Usage:
+
+```
+$ python3 ScrapPY.py test_doc.pdf
+```
+
+ScrapPY Output:
+
+```
+# ScrapPY outputs the ScrapPY.txt file to the directory in which the tool was ran. To view the first fifty lines of the file, run this command:
+
+$ head -50 ScrapPY.txt
+
+# To see how many words were generated, run this command:
+
+$ wc -l ScrapPY.txt
+```
+
+# Integration with Offensive Security Tools:
+
+
