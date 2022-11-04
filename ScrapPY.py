@@ -9,6 +9,7 @@ import os
 
 # Variables
 BLUE = '\033[34m'
+RED = '\033[91m'
 GREEN = '\033[92m'
 NORM = '\x1b[0m'
 tag = "@RoseSecurity"
@@ -28,9 +29,10 @@ time.sleep(1)
 print("\nScrapPY enumerates documents, manuals, and sensitive PDFs for key phrases and words that can be utilized in dictionary and brute force attacks. These keywords are outputted to a text file (ScrapPY.txt in the directory which the tool was ran from)that can be read by tools such as Hydra, Dirb, and other offensive security tools for initial access and lateral movement.\n\nUsage: python3 ScrapPY.py test_doc.pdf\n\n" + GREEN + tag + NORM)
 
 # Evaluate sysargv
-if len(sys.argv) >= 2:
+if len(sys.argv) > 1:
     filename = sys.argv[1]
-
+else:
+    print(RED + "\nEnter PDF file to scrape\n" + NORM)
 # Open provided file
 pdf_file = open(filename, 'rb')
 read_pdf = PyPDF2.PdfFileReader(pdf_file)
