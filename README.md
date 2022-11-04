@@ -76,7 +76,8 @@ GENERATED WORDS: 4592
 
 Utilize ScrapPY with Hydra for advanced brute force attacks:
 
-```root@RoseSecurity:~# hydra -l root -P /root/ScrapPY/ScrapPY.txt -t 6 ssh://192.168.1.123
+```
+root@RoseSecurity:~# hydra -l root -P /root/ScrapPY/ScrapPY.txt -t 6 ssh://192.168.1.123
 Hydra v7.6 (c)2013 by van Hauser/THC & David Maciejak - for legal purposes only
 
 Hydra (http://www.thc.org/thc-hydra) starting at 2014-05-19 07:53:33
