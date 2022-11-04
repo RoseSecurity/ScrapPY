@@ -1,4 +1,4 @@
-# :closed_book: ScrapPY: PDF Scraping Made Easy
+# :dog2: ScrapPY: PDF Scraping Made Easy
 
 <p align="center">
 <img width=40% height=40% src="https://user-images.githubusercontent.com/72598486/200046477-94c17a93-2dc8-418b-96eb-2b554227dce2.png">
