@@ -58,20 +58,20 @@ By The Dark Raver
 -----------------
 
 START_TIME: Fri May 16 13:41:45 2014
-URL_BASE: http://192.168.1.224/
+URL_BASE: http://192.168.1.123/
 WORDLIST_FILES: /root/ScrapPY/ScrapPY.txt
 
 -----------------
 
 GENERATED WORDS: 4592
 
----- Scanning URL: http://192.168.1.224/ ----
-==> DIRECTORY: http://192.168.1.224/vi/
-+ http://192.168.1.224/programming (CODE:200|SIZE:2726)
-+ http://192.168.1.224/s7-logic/ (CODE:403|SIZE:1122)
-==> DIRECTORY: http://192.168.1.224/config/
-==> DIRECTORY: http://192.168.1.224/docs/
-==> DIRECTORY: http://192.168.1.224/external/
+---- Scanning URL: http://192.168.1.123/ ----
+==> DIRECTORY: http://192.168.1.123/vi/
++ http://192.168.1.123/programming (CODE:200|SIZE:2726)
++ http://192.168.1.123/s7-logic/ (CODE:403|SIZE:1122)
+==> DIRECTORY: http://192.168.1.123/config/
+==> DIRECTORY: http://192.168.1.123/docs/
+==> DIRECTORY: http://192.168.1.123/external/
 ```
 
 Utilize ScrapPY with Hydra for advanced brute force attacks:
@@ -83,4 +83,10 @@ Hydra v7.6 (c)2013 by van Hauser/THC & David Maciejak - for legal purposes only
 Hydra (http://www.thc.org/thc-hydra) starting at 2014-05-19 07:53:33
 [DATA] 6 tasks, 1 server, 1003 login tries (l:1/p:1003), ~167 tries per task
 [DATA] attacking service ssh on port 22
+```
+
+Enhance Nmap scripts with ScrapPY wordlists:
+
+```
+nmap -p445 --script smb-brute.nse --script-args userdb=users.txt,passdb=ScrapPY.txt 192.168.1.123
 ```
