@@ -90,3 +90,9 @@ Enhance Nmap scripts with ScrapPY wordlists:
 ```
 nmap -p445 --script smb-brute.nse --script-args userdb=users.txt,passdb=ScrapPY.txt 192.168.1.123
 ```
+
+## Future Development:
+
+- [ ] Allow for custom output file naming and increased verbosity
+- [ ] Integrate different modes of operation including word frequency analysis
+- [ ] Incorporate ```pyexiftool``` for metadata analysis
