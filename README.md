@@ -25,6 +25,7 @@ Install Dependencies:
 ```
 $ pip3 install PyPDF2
 $ pip3 install textract
+$ pip3 install Counter
 ```
 
 ScrapPY Usage:
