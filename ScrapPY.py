@@ -29,7 +29,7 @@ print(BLUE + """
 time.sleep(1)
 
 # Arguments
-parser = argparse.ArgumentParser(description='\nScrapPY enumerates documents, manuals, and sensitive PDFs for key phrases and words that can be utilized in dictionary and brute force attacks. These keywords are outputted to a text file (ScrapPY.txt in the directory which the tool was ran from)that can be read by tools such as Hydra, Dirb, and other offensive security tools for initial access and lateral movement.\t' + GREEN + tag + NORM)
+parser = argparse.ArgumentParser(description='\nScrapPY enumerates documents, manuals, and sensitive PDFs for key phrases and words that can be utilized in dictionary and brute force attacks. These keywords are outputted to a default ScrapPY.txt file, or specified name with the --output flag, in the directory which the tool was ran from. This file can be read by tools such as Hydra, Dirb, and other offensive security tools for initial access and lateral movement.\t' + GREEN + tag + NORM)
 parser.add_argument('-f','--file', help='PDF input file')           
 parser.add_argument('-m', '--mode', choices=['word-frequency', 'full'], help='Modes of operation: full - All keywords, word-frequency - 100 most frequently used keywords', default='full')      
 parser.add_argument('-o', '--output', help='Name of file to output')
