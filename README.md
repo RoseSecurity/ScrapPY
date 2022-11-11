@@ -4,7 +4,7 @@
 <img width=40% height=40% src="https://user-images.githubusercontent.com/72598486/200046477-94c17a93-2dc8-418b-96eb-2b554227dce2.png">
 </p>
 
-ScrapPY is a Python utility for scraping manuals, documents, and other sensitive PDFs to generate wordlists that can be utilized by offensive security tools to perform brute force, forced browsing, and dictionary attacks against targets. The tool dives deep to discover keywords and phrases leading to potential passwords or hidden directories, outputting to a text file that is readable by tools such as Hydra, Dirb, and Nmap. Expedite initial access, vulnerability discovery, and lateral movement with ScrapPY!
+ScrapPY is a Python utility for scraping manuals, documents, and other sensitive PDFs to generate wordlists that can be utilized by offensive security tools to perform brute force, forced browsing, and dictionary attacks against targets. ScrapPY performs word frequency analysis and can run in full output modes to craft custom wordlists for targeted attacks. The tool dives deep to discover keywords and phrases leading to potential passwords or hidden directories, outputting to a text file that is readable by tools such as Hydra, Dirb, and Nmap. Expedite initial access, vulnerability discovery, and lateral movement with ScrapPY!
 
 # Demo:
 
@@ -30,13 +30,23 @@ $ pip3 install textract
 ScrapPY Usage:
 
 ```
-$ python3 ScrapPY.py test_doc.pdf
+usage: ScrapPY.py [-h] [-f FILE] [-m {word-frequency,full}] [-o OUTPUT]
+```
+
+```
+# Output top 100 frequently used keywords to a file name ```Top_100_Keywords.txt```
+
+$ python3 ScrapPY.py -f example.pdf -m word-frequency -o Top_100_Keywords.txt
+
+# Output all keywords to default ScrapPY.txt file
+
+$ python3 ScrapPY.py -f example.pdf
 ```
 
 ScrapPY Output:
 
 ```
-# ScrapPY outputs the ScrapPY.txt file to the directory in which the tool was ran. To view the first fifty lines of the file, run this command:
+# ScrapPY outputs the ScrapPY.txt file or specified name file to the directory in which the tool was ran. To view the first fifty lines of the file, run this command:
 
 $ head -50 ScrapPY.txt
 
@@ -93,6 +103,6 @@ nmap -p445 --script smb-brute.nse --script-args userdb=users.txt,passdb=ScrapPY.
 
 ## Future Development:
 
-- [ ] Allow for custom output file naming and increased verbosity
-- [ ] Integrate different modes of operation including word frequency analysis
+- [x] Allow for custom output file naming and increased verbosity
+- [x] Integrate different modes of operation including word frequency analysis
 - [ ] Incorporate ```pyexiftool``` for metadata analysis
