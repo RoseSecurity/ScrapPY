@@ -8,7 +8,7 @@ ScrapPY is a Python utility for scraping manuals, documents, and other sensitive
 
 # Demo:
 
-https://user-images.githubusercontent.com/72598486/200044935-1398e9d7-0e18-4953-a057-1f2597d65d25.mov
+https://user-images.githubusercontent.com/72598486/201235531-6b037daf-d1f3-4d33-b256-8411e3a0b3da.mov
 
 # Install:
 
