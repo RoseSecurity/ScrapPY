@@ -61,7 +61,7 @@ $ wc -l ScrapPY.txt
 Easily integrate with tools such as Dirb to expedite the process of discovering hidden subdirectories:
 
 ```
-root@RoseSecurity:~# dirb http://192.168.1.224/ /root/ScrapPY/ScrapPY.txt
+root@RoseSecurity:~# dirb http://192.168.1.123/ /root/ScrapPY/ScrapPY.txt
 
 -----------------
 DIRB v2.21
