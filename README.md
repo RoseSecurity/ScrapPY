@@ -107,3 +107,7 @@ nmap -p445 --script smb-brute.nse --script-args userdb=users.txt,passdb=ScrapPY.
 - [x] Allow for custom output file naming and increased verbosity
 - [x] Integrate different modes of operation including word frequency analysis
 - [ ] Incorporate ```pyexiftool``` for metadata analysis
+- [ ] Search for high-entropy data
+- [ ] Search for path-like data 
+- [ ] Implement image OCR to enumerate data from images in PDFs
+
