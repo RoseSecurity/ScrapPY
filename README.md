@@ -23,18 +23,20 @@ $ sudo git clone https://github.com/RoseSecurity/ScrapPY.git
 Install Dependencies:
 
 ```
-$ pip3 install PyPDF2
-$ pip3 install textract
-$ pip3 install Counter
+$ pip3 install -r requirements.txt
 ```
 
 ScrapPY Usage:
 
 ```
-usage: ScrapPY.py [-h] [-f FILE] [-m {word-frequency,full}] [-o OUTPUT]
+usage: ScrapPY.py [-h] [-f FILE] [-m {word-frequency,full,metadata,entropy}] [-o OUTPUT]
 ```
 
 ```
+# Output metadata of document 
+
+$ python3 ScrapPY.py -f example.pdf -m metadata
+
 # Output top 100 frequently used keywords to a file name ```Top_100_Keywords.txt```
 
 $ python3 ScrapPY.py -f example.pdf -m word-frequency -o Top_100_Keywords.txt
@@ -42,6 +44,10 @@ $ python3 ScrapPY.py -f example.pdf -m word-frequency -o Top_100_Keywords.txt
 # Output all keywords to default ScrapPY.txt file
 
 $ python3 ScrapPY.py -f example.pdf
+
+# Output top 100 keywords with highest entropy rating
+
+$ python3 ScrapPY.py -f example.pdf -m entropy
 ```
 
 ScrapPY Output:
@@ -106,8 +112,8 @@ nmap -p445 --script smb-brute.nse --script-args userdb=users.txt,passdb=ScrapPY.
 
 - [x] Allow for custom output file naming and increased verbosity
 - [x] Integrate different modes of operation including word frequency analysis
-- [ ] Incorporate ```pyexiftool``` for metadata analysis
-- [ ] Search for high-entropy data
+- [x] Allow for metadata analysis
+- [x] Search for high-entropy data
 - [ ] Search for path-like data 
 - [ ] Implement image OCR to enumerate data from images in PDFs
 
