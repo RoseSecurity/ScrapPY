@@ -26,27 +26,34 @@ Install Dependencies:
 $ pip3 install -r requirements.txt
 ```
 
-ScrapPY Usage:
+# ScrapPY Usage:
 
 ```
 usage: ScrapPY.py [-h] [-f FILE] [-m {word-frequency,full,metadata,entropy}] [-o OUTPUT]
 ```
 
+
+Output metadata of document:
+
 ```
-# Output metadata of document 
-
 $ python3 ScrapPY.py -f example.pdf -m metadata
+```
 
-# Output top 100 frequently used keywords to a file name ```Top_100_Keywords.txt```
+Output top 100 frequently used keywords to a file name ```Top_100_Keywords.txt```:
 
+```
 $ python3 ScrapPY.py -f example.pdf -m word-frequency -o Top_100_Keywords.txt
+```
 
-# Output all keywords to default ScrapPY.txt file
+Output all keywords to default ScrapPY.txt file:
 
+```
 $ python3 ScrapPY.py -f example.pdf
+```
 
-# Output top 100 keywords with highest entropy rating
+Output top 100 keywords with highest entropy rating:
 
+```
 $ python3 ScrapPY.py -f example.pdf -m entropy
 ```
 
