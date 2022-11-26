@@ -123,4 +123,5 @@ nmap -p445 --script smb-brute.nse --script-args userdb=users.txt,passdb=ScrapPY.
 - [x] Search for high-entropy data
 - [ ] Search for path-like data 
 - [ ] Implement image OCR to enumerate data from images in PDFs
+- [ ] Allow for processing of multiple PDFs
 
