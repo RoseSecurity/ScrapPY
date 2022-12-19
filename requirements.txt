@@ -1,5 +1,4 @@
 scipy
-collections
 pandas
 PyPDF2
 textract
