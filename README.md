@@ -121,6 +121,7 @@ nmap -p445 --script smb-brute.nse --script-args userdb=users.txt,passdb=ScrapPY.
 - [x] Integrate different modes of operation including word frequency analysis
 - [x] Allow for metadata analysis
 - [x] Search for high-entropy data
+- [ ] Prepare packaging for `homebrew` installation
 - [ ] Search for path-like data 
 - [ ] Implement image OCR to enumerate data from images in PDFs
 - [ ] Allow for processing of multiple PDFs
