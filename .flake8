@@ -1,0 +1,6 @@
+[flake8]
+extend-ignore = E203
+exclude =
+    .git,
+    __pycache__
+max-complexity = 10
