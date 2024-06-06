@@ -29,7 +29,7 @@ textract = ">=1.6,<1.7"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "7.0.0"
-pylint = "3.1.0"
+pylint = "3.2.3"
 
 [tool.poetry.urls]
 "Changelog" = "https://github.com/RoseSecurity/ScrapPY/releases"
