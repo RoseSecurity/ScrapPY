@@ -1,4 +1,4 @@
-scipy==1.13.0
+scipy==1.14.0
 pandas==2.2.2
 PyPDF2==3.0.1
 textract==1.6.5
