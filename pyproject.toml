@@ -28,7 +28,7 @@ PyPDF2 = ">=3.0,<3.1"
 textract = ">=1.6,<1.7"
 
 [tool.poetry.group.dev.dependencies]
-flake8 = "7.0.0"
+flake8 = "7.1.0"
 pylint = "3.2.5"
 
 [tool.poetry.urls]
