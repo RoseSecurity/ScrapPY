@@ -2,10 +2,18 @@ package utils
 
 import (
 	"fmt"
+	"os"
 	"sort"
 	"strings"
 
 	"github.com/barasher/go-exiftool"
+	"github.com/olekukonko/tablewriter"
+)
+
+// ANSI escape codes for bold and blue text
+var (
+	blue = "\033[1;34m"
+	norm = "\x1b[0m"
 )
 
 type wordCount struct {
@@ -62,6 +70,10 @@ func PrintMetadata(file string) {
 
 	fileInfos := et.ExtractMetadata(file)
 
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Key", "Value"})
+	table.SetBorder(false)
+
 	for _, fileInfo := range fileInfos {
 		if fileInfo.Err != nil {
 			LogError(fileInfo.Err)
@@ -69,7 +81,9 @@ func PrintMetadata(file string) {
 		}
 
 		for k, v := range fileInfo.Fields {
-			fmt.Printf("%v: %v\n", k, v)
+			table.Append([]string{k, fmt.Sprintf("%v", v)})
 		}
 	}
+
+	table.Render()
 }

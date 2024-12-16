@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	tui "github.com/RoseSecurity/ScrapPY/internal/tui/utils"
-	"github.com/RoseSecurity/ScrapPY/pkg/utils"
+	tui "github.com/RoseSecurity/ScrapNGo/internal/tui/utils"
+	"github.com/RoseSecurity/ScrapNGo/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -18,11 +18,11 @@ var (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "scrapPY",
-	Short: "ScrapPY enumerates documents, manuals, and sensitive PDFs for key phrases and words that can be utilized in dictionary and brute force attacks.",
-	Long: `ScrapPY enumerates documents, manuals, and sensitive PDFs for key phrases and words 
+	Use:   "scrapNGo",
+	Short: "ScrapNGo enumerates documents, manuals, and sensitive PDFs for key phrases and words that can be utilized in dictionary and brute force attacks.",
+	Long: `ScrapNGo enumerates documents, manuals, and sensitive PDFs for key phrases and words 
 that can be utilized in dictionary and brute force attacks. These keywords are outputted 
-to a text file (ScrapPY.txt in the directory which the tool was run from) that can be read 
+to a text file (ScrapNGo.txt in the directory which the tool was run from) that can be read 
 by tools such as Hydra, Dirb, and other offensive security tools for initial access and 
 lateral movement.`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -32,8 +32,7 @@ lateral movement.`,
 
 		// Print help if no file is provided
 		if file == "" {
-			tui.PrintStyledText("SCRAPPY")
-			fmt.Println(red + "Enter PDF file to scrape or use -h for help menu\n" + norm)
+			cmd.Help()
 			return
 		}
 
@@ -76,9 +75,18 @@ lateral movement.`,
 }
 
 func init() {
+	// Custom help menu to display banner
+	rootCmd.SetHelpFunc(func(cmd *cobra.Command, args []string) {
+		fmt.Println()
+		tui.PrintStyledText("SCRAPPY")
+		fmt.Println(cmd.UsageString())
+	})
+	// Docs and Version commands
+	rootCmd.AddCommand(docsCmd)
+	rootCmd.AddCommand(versionCmd)
 	rootCmd.Flags().StringP("file", "f", "", "PDF input file")
 	rootCmd.Flags().StringP("mode", "m", "full", "Modes of operation: full, word-frequency, metadata, entropy")
-	rootCmd.Flags().StringP("output-file", "o", "ScrapPY.txt", "Output file name")
+	rootCmd.Flags().StringP("output-file", "o", "ScrapNGo.txt", "Output file name")
 }
 
 func Execute() {
