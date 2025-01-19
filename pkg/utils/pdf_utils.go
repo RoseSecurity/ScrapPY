@@ -6,36 +6,36 @@ import (
 	"regexp"
 	"strings"
 	"unicode"
+	"unicode/utf8"
 
 	"github.com/ledongthuc/pdf"
 )
 
 // isValidWord checks if a word is meaningful and should be kept
 func isValidWord(word string) bool {
-	// Remove any leading/trailing non-letter characters
+	// Trim non-letter characters
 	word = strings.TrimFunc(word, func(r rune) bool {
 		return !unicode.IsLetter(r)
 	})
 
-	// Reject if word is empty after trimming
-	if len(word) < 3 {
+	// Reject words that are too short or invalid
+	if utf8.RuneCountInString(word) < 3 {
 		return false
 	}
 
-	// Reject if word contains too many numbers or special characters
-	numCount := 0
-	letterCount := 0
+	// Check the ratio of letters to other characters
+	letters, numbers := 0, 0
 	for _, r := range word {
-		if unicode.IsNumber(r) {
-			numCount++
-		}
-		if unicode.IsLetter(r) {
-			letterCount++
+		switch {
+		case unicode.IsLetter(r):
+			letters++
+		case unicode.IsNumber(r):
+			numbers++
 		}
 	}
 
-	// Require at least 2 letters and less than 50% numbers
-	return letterCount >= 2 && float64(numCount)/float64(len(word)) < 0.5
+	// Require at least 2 letters and <50% numeric characters
+	return letters >= 2 && float64(numbers)/float64(len(word)) < 0.5
 }
 
 // ExtractTextFromPDF extracts text from a PDF file and splits it into cleaned words
@@ -46,29 +46,30 @@ func ExtractTextFromPDF(file string) ([]string, error) {
 	}
 	defer f.Close()
 
-	// Get plain text from the PDF reader
-	b, err := r.GetPlainText()
-	if err != nil {
-		return nil, fmt.Errorf("failed to extract plain text from PDF: %w", err)
+	var buffer bytes.Buffer
+
+	// Extract text from each page
+	for pageIndex := 0; pageIndex < r.NumPage(); pageIndex++ {
+		page := r.Page(pageIndex)
+		if page.V.IsNull() {
+			continue
+		}
+		buffer.WriteString(fmt.Sprintf("%v", page.Content()))
 	}
 
-	var buf bytes.Buffer
-	if _, err := buf.ReadFrom(b); err != nil {
-		return nil, fmt.Errorf("failed to read text from buffer: %w", err)
-	}
+	// Unicode normalization for consistent encoding
+	text := strings.ToValidUTF8(buffer.String(), "")
 
-	text := buf.String()
-
-	// Comprehensive text cleaning
-	// Remove special characters, preserve letters, numbers, and spaces
-	reg := regexp.MustCompile(`[^a-zA-Z0-9\s-]`)
+	// Remove non-alphanumeric characters except spaces and dashes
+	reg := regexp.MustCompile(`[^\w\s-]`)
 	cleanedText := reg.ReplaceAllString(text, " ")
 
-	// Split into words and filter
+	// Split text into words
 	words := strings.Fields(cleanedText)
 	var validWords []string
+
+	// Validate words
 	for _, word := range words {
-		// Additional filtering for meaningful words
 		if isValidWord(word) {
 			validWords = append(validWords, word)
 		}
@@ -77,7 +78,7 @@ func ExtractTextFromPDF(file string) ([]string, error) {
 	return validWords, nil
 }
 
-// RemoveCommonWords removes common words and deduplicates entries
+// RemoveCommonWords filters out common words and deduplicates the input
 func RemoveCommonWords(keywords []string) []string {
 	commonWords := map[string]struct{}{
 		"and": {}, "the": {}, "at": {}, "there": {}, "some": {}, "my": {}, "of": {}, "be": {},
@@ -91,18 +92,16 @@ func RemoveCommonWords(keywords []string) []string {
 		"said": {}, "so": {},
 	}
 
-	seenWords := make(map[string]struct{}, len(keywords))
+	seenWords := make(map[string]struct{})
 	var result []string
 
+	// Filter out common words and duplicates
 	for _, word := range keywords {
 		lowerWord := strings.ToLower(word)
-
-		// Check if word is not a common word
 		if _, isCommon := commonWords[lowerWord]; !isCommon {
-			// Check if word has not been seen before
-			if _, isSeen := seenWords[lowerWord]; !isSeen {
-				seenWords[lowerWord] = struct{}{} // Mark word as seen
-				result = append(result, word)
+			if _, seen := seenWords[lowerWord]; !seen {
+				seenWords[lowerWord] = struct{}{}
+				result = append(result, lowerWord)
 			}
 		}
 	}
@@ -110,12 +109,12 @@ func RemoveCommonWords(keywords []string) []string {
 	return result
 }
 
-// Additional utility to clean problematic tokens
+// cleanToken applies additional token cleanup rules
 func cleanToken(token string) string {
-	// Remove hexadecimal and numeric prefixes
+	// Remove hexadecimal prefixes (e.g., "0x1234")
 	token = regexp.MustCompile(`^(0x|0\d+)`).ReplaceAllString(token, "")
 
-	// Trim non-letter characters from start and end
+	// Trim non-letter characters
 	token = strings.TrimFunc(token, func(r rune) bool {
 		return !unicode.IsLetter(r)
 	})

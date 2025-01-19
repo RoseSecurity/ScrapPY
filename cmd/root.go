@@ -20,10 +20,10 @@ var (
 var rootCmd = &cobra.Command{
 	Use:   "scrapNGo",
 	Short: "ScrapNGo enumerates documents, manuals, and sensitive PDFs for key phrases and words that can be utilized in dictionary and brute force attacks.",
-	Long: `ScrapNGo enumerates documents, manuals, and sensitive PDFs for key phrases and words 
-that can be utilized in dictionary and brute force attacks. These keywords are outputted 
-to a text file (ScrapNGo.txt in the directory which the tool was run from) that can be read 
-by tools such as Hydra, Dirb, and other offensive security tools for initial access and 
+	Long: `ScrapNGo enumerates documents, manuals, and sensitive PDFs for key phrases and words
+that can be utilized in dictionary and brute force attacks. These keywords are outputted
+to a text file (ScrapNGo.txt in the directory which the tool was run from) that can be read
+by tools such as Hydra, Dirb, and other offensive security tools for initial access and
 lateral movement.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		file, _ := cmd.Flags().GetString("file")
@@ -44,7 +44,7 @@ lateral movement.`,
 
 		wordList := utils.RemoveCommonWords(fileContent)
 
-		if len(fileContent) == 0 {
+		if len(wordList) == 0 {
 			log.Fatalf("No content found in the PDF file: %s", file)
 		}
 
@@ -52,12 +52,16 @@ lateral movement.`,
 		var keywords []string
 		switch mode {
 		case "word-frequency":
+			spinner := tui.StartSpinner("Extracting word frequency...\n")
 			keywords = utils.WordFrequency(wordList, 100)
+			tui.StopSpinner(spinner)
 		case "metadata":
+			spinner := tui.StartSpinner("Extracting PDF metadata...\n")
 			utils.PrintMetadata(file)
 			if err != nil {
 				utils.LogErrorAndExit(err)
 			}
+			tui.StopSpinner(spinner)
 			return
 		case "entropy":
 			// keywords = utils.CalculateEntropy(wordList, 100)

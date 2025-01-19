@@ -1,4 +1,4 @@
-BINARY_NAME=scrapngo
+BINARY_NAME=scrapNGo
 VERSION=local
 GO=go
 
